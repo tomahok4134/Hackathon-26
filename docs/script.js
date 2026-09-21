@@ -1,5 +1,5 @@
 const CurrentDate=new Date();
-const CurrentTime=CurrentDate.gethours();
+const CurrentTime=CurrentDate.getHours();
 if (CurrentTime<=5&&CurrentTime>=10) {
 	document.querySelector(".Greetings")="Good Morning";
 }else if (CurrentTime<=10&&CurrentTime>=15) {
