@@ -9,5 +9,5 @@ if(CurrentTime>=20||CurrentTime<5){
 }else if(CurrentTime>=5){
     Greetings.textContent="Good Morning";
 }else{
-	Greetimgs.textContent="What time is it now?";
+	Greetimgs.textContent="What time is it now??";
 }
