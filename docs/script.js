@@ -11,3 +11,4 @@ if(CurrentTime>=20||CurrentTime<5){
 }else{
 	Greetimgs.textContent="What time is it now??";
 }
+
