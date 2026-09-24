@@ -9,16 +9,5 @@ if (CurrentTime >= 20 || CurrentTime < 5) {
 } else if (CurrentTime >= 5) {
   Greetings.textContent = "Good Morning";
 } else {
-  Greetimgs.textContent = "What time is it now??";
-}
-
-//tests
-try {
-  localStorage.setItem(
-    "localstorage_test",
-    JSON.stringify([15, 7, 24, 161, 43, 82, 53, 80]),
-  );
-  alert(localStorage.getItem("localstorage_test"));
-} catch (ex) {
-  alert(ex);
+  Greetings.textContent = "What time is it now??";
 }
