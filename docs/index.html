@@ -1,25 +1,34 @@
 <!DOCTYPE HTML>
 <html lang="ja-JP">
-  <head>
-    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="./script.js" defer></script>
-    <link rel="icon" type="image/png" href="./favicon.png">
-    <link rel="stylesheet" href="./stylesheet.css">
-    <title>デジタル回覧板</title>
-  </head>
-  <body>
-    <header>
-      
-    </header>
-    <div class="main">
-      <h1 class="Greetings"></h1>
-      <div class="button">
-        <button id="signup" onclick="location.href='./signup/'">参加</button>
-        <button id="signin" onclick="location.href='./signin/'">閲覧</button>
-      </div>
-    </div>
-    <footer>
 
-    </footer>
-  </body>
+<head>
+  <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="./script.js" defer></script>
+  <script src="./system/config.js"></script>
+  <script src="./system/util.js"></script>
+  <script src="./system/general.js"></script>
+  <link rel="icon" type="image/png" href="./favicon.png">
+  <link rel="stylesheet" href="./stylesheet.css">
+  <title>デジタル回覧板</title>
+</head>
+
+<body>
+  <header>
+
+  </header>
+  <div class="main">
+    <h1 class="Greetings"></h1>
+    <div class="fordebug">
+      デバッグ用: <span id="debugmessage"></span>
+    </div>
+    <div class="button">
+      <button id="signup" onclick="location.href='./signup/'">参加</button>
+      <button id="signin" onclick="location.href='./signin/'">閲覧</button>
+    </div>
+  </div>
+  <footer>
+
+  </footer>
+</body>
+
 </html>

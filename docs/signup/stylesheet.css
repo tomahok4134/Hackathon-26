@@ -1,5 +1,15 @@
-textarea{
-    resize:none;
-    field-sizing:content;
-    min-width:30%;
+textarea {
+  resize: none;
+  field-sizing: content;
+  min-width: 30%;
+}
+
+.form-label {
+  margin-top: 10px;
+}
+
+.form-submit {
+  display: block;
+  margin-top: 20px;
+  padding: 5px 30px;
 }

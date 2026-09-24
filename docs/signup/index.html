@@ -1,30 +1,41 @@
 <!DOCTYPE HTML>
 <html lang="ja-JP">
-  <head>
-    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="./script.js" defer></script>
-    <link rel="icon" type="image/png" href="../favicon.png">
-    <link rel="stylesheet" href="./stylesheet.css">
-    <title>デジタル回覧板</title>
-  </head>
-  <body>
-    <header>
 
-    </header>
-    <div class="main">
-      <p>名前(姓と名の間は半角スペースで区切ってください。)</p>
-      <input>
-      <p>性別</p>
-      <select>
+<head>
+  <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="./script.js" defer></script>
+  <script src="../system/config.js"></script>
+  <script src="../system/util.js"></script>
+  <script src="../system/general.js"></script>
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <link rel="stylesheet" href="./stylesheet.css">
+  <title>デジタル回覧板</title>
+</head>
+
+<body>
+  <header>
+
+  </header>
+  <div class="main">
+    <div class="likeform">
+      <div class="form-label">棟</div>
+      <select class="buildings" id="signup-buildings">
+      </select>
+      <div class="form-label">部屋番号</div>
+      <input type="text" id="signup-roomNumber">
+      <div class="form-label">名前(姓と名の間は半角スペースで区切ってください。)</div>
+      <input id="signup-name">
+      <div class="form-label">性別</div>
+      <select id="signup-gender">
         <option value="male">男性</option>
         <option value="female">女性</option>
         <option value="other">その他</option>
       </select>
-      <p>生年月日</p>
-      <input type="date">
-      <p>世帯主との関係</p>
-      <select>
-        <option value="head">世帯主</option>
+      <div class="form-label">生年月日</div>
+      <input type="date" id="signup-birth">
+      <div class="form-label">世帯主との関係</div>
+      <select id="signup-relationship">
+        <option value="世帯主">世帯主</option>
         <option value="配偶者">配偶者</option>
         <option value="親">親</option>
         <option value="子">子</option>
@@ -43,27 +54,25 @@
         <option value="義兄弟">義兄弟</option>
         <option value="婿/嫁">婿/嫁</option>
         <option value="義叔父/義叔母">義叔父/義叔母</option>
-        <option value="other">その他</option>
+        <option value="その他">その他</option>
       </select>
-      <!--<p>部屋番号</p>
-      <input type="text">-->
-      <p>自己紹介･コメント(任意)</p>
-      <p>※以下の欄は登録する本人のみが記入し、本人が記入できない場合は無記入としてください。</p>
-      <textarea></textarea>
-      <p>非公開にする情報</p>
-      <input type="checkbox" id="username" value="username">
-      <label for="username">名前</label>
+
+      <div class="form-label">自己紹介･コメント(任意)<br>※以下の欄は登録する本人のみが記入し、本人が記入できない場合は無記入としてください。</div>
+      <textarea id="signup-comment"></textarea>
+      <div class="form-label">非公開にする情報</div>
       <input type="checkbox" id="gender" value="gender">
       <label for="gender">性別</label>
-      <input type="checkbox" id="birthdate" value="birthday">
+      <input type="checkbox" id="birth" value="birthday">
       <label for="birthdate">生年月日</label>
-      <input type="checkbox" id="relation" value="relation">
+      <input type="checkbox" id="relationship" value="relation">
       <label for="relation">世帯主との関係</label>
-      <br>
-      <input type="submit" value="上記の内容で登録" onclick="location.href='../home/'">
+      <button id="register" class="form-submit">上記の内容で登録</button>
     </div>
-    <footer>
-      
-    </footer>
-  </body>
+
+  </div>
+  <footer>
+
+  </footer>
+</body>
+
 </html>
