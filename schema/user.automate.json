@@ -1,0 +1,86 @@
+{
+  "type": "object",
+  "properties": {
+    "username": {
+      "type": "string"
+    },
+    "gender": {
+      "type": "string",
+      "enum": [
+        "male",
+        "female",
+        "other"
+      ]
+    },
+    "birthday": {
+      "type": "string"
+    },
+    "bulidingId": {
+      "type": "number"
+    },
+    "roomFloor": {
+      "type": "number"
+    },
+    "roomPlace": {
+      "type": "number"
+    },
+    "relationship": {
+      "type": "string",
+      "enum": [
+        "head",
+        "配偶者",
+        "親",
+        "子",
+        "甥/姪",
+        "孫",
+        "兄弟",
+        "従兄弟",
+        "又従兄弟",
+        "叔父/叔母",
+        "祖父母",
+        "大叔父/大叔母",
+        "曽祖父母",
+        "従甥/従姪",
+        "曾孫",
+        "義親",
+        "義兄弟",
+        "婿/嫁",
+        "義叔父/義叔母"
+      ]
+    },
+    "household": {
+      "type": "array",
+      "items": {
+        "type": "number"
+      }
+    },
+    "privateInfo": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "username",
+          "gender",
+          "relationship",
+          "birthday"
+        ]
+      },
+      "uniqueItems": true
+    },
+    "comment": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "username",
+    "gender",
+    "birthday",
+    "bulidingId",
+    "roomFloor",
+    "roomPlace",
+    "relationship",
+    "household",
+    "privateInfo",
+    "comment"
+  ]
+}

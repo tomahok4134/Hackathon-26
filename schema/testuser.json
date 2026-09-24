@@ -1,0 +1,13 @@
+{
+  "$schema": "./user.json",
+  "username": "test user",
+  "gender": "male",
+  "birthday": "2026/10/10",
+  "bulidingId": 0,
+  "roomFloor": 1,
+  "roomPlace": 1,
+  "relationship": "head",
+  "household": [],
+  "privateInfo": [],
+  "comment": ""
+}
