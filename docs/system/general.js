@@ -62,6 +62,7 @@ function addHeader() {
   document.body.insertAdjacentElement("afterbegin", header);
 
   header.innerHTML = `
+    <button id="header-back"></button>
     <a id="header-title" href="#">デジタル回覧板</a>
     <div id="header-user">
       <span class="material-symbols-outlined">
@@ -70,6 +71,8 @@ function addHeader() {
       <div class="username"></div>
     </div>
   `;
+
+  document.querySelector("#header-back").onclick = () => history.back();
 }
 
 /**
