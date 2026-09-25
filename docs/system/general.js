@@ -43,10 +43,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   })();
 
+  addHeader();
   // usernameに注入
   (async () => {
     const login = await isLogining();
-    addHeader(login[0]);
+    applyHeaderURL(login[0]);
     /**@type {NodeListOf<HTMLElement>} */
     const usernameElements = document.querySelectorAll(".username");
     if (usernameElements.length === 0) return;
@@ -56,24 +57,37 @@ document.addEventListener("DOMContentLoaded", async () => {
   })();
 });
 
-/**
- * @param {boolean} isLogining
- */
-function addHeader(isLogining) {
-  const nowURL = new URL(document.URL);
-  const path = isLogining
-    ? `${nowURL.origin}/docs/home/`
-    : `${nowURL.origin}/docs/`;
+function addHeader() {
   const header = document.createElement("header");
   document.body.insertAdjacentElement("afterbegin", header);
 
   header.innerHTML = `
-    <a class="header-title" href="${path}">デジタル回覧板</a>
-    <div class="header-user">
+    <a id="header-title" href="#">デジタル回覧板</a>
+    <div id="header-user">
       <span class="material-symbols-outlined">
         face
       </span>
       <div class="username"></div>
     </div>
   `;
+}
+
+/**
+ * @param {boolean} isLogining
+ */
+function applyHeaderURL(isLogining) {
+  const nowURL = new URL(document.URL);
+  const path = isLogining
+    ? `${nowURL.origin}/docs/home/`
+    : `${nowURL.origin}/docs/`;
+  document.querySelector("#header-title").href = path;
+
+  document.querySelector("#header-user").onclick = () => {
+    if (isLogining) {
+      localStorage.removeItem("uuid");
+      location.href = `${new URL(document.URL).origin}/docs/`;
+    } else {
+      location.href = `${new URL(document.URL).origin}/docs/signup`;
+    }
+  };
 }
