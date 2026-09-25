@@ -57,3 +57,13 @@ function getCheckboxs(ids) {
   });
   return obj;
 }
+
+/**
+ * @param {string} path
+ */
+function getURL(path) {
+  const url = document.URL;
+  if (url.includes("localhost") || url.includes("127.0.0.1"))
+    return `http://localhost:5500/docs/${path}`;
+  return `https://tomahok4134.github.io/Hackathon-26/${path}`;
+}

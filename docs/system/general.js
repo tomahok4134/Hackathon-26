@@ -80,17 +80,15 @@ function addHeader() {
  */
 function applyHeaderURL(isLogining) {
   const nowURL = new URL(document.URL);
-  const path = isLogining
-    ? `${nowURL.origin}/docs/home/index.html`
-    : `${nowURL.origin}/docs/index.html`;
+  const path = isLogining ? getURL(`home/index.html`) : getURL(`index.html`);
   document.querySelector("#header-title").href = path;
 
   document.querySelector("#header-user").onclick = () => {
     if (isLogining) {
       localStorage.removeItem("uuid");
-      location.href = `${new URL(document.URL).origin}/docs/index.html`;
+      location.href = getURL(`index.html`);
     } else {
-      location.href = `${new URL(document.URL).origin}/docs/signup/index.html`;
+      location.href = getURL(`signup/index.html`);
     }
   };
 }
