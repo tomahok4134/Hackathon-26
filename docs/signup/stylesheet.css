@@ -1,3 +1,11 @@
+body {
+  font-size: 20px;
+  padding: 5px 10px;
+}
+* {
+  font-family: "Open Sans", sans-serif;
+  border-radius: 0px;
+}
 textarea {
   resize: none;
   field-sizing: content;
@@ -5,11 +13,42 @@ textarea {
 }
 
 .form-label {
-  margin-top: 10px;
+  margin: 10px 0px 5px 5px;
+}
+
+.button-row {
+  width: 100%;
 }
 
 .form-submit {
   display: block;
   margin-top: 20px;
-  padding: 5px 30px;
+}
+
+textarea,
+input[type="text"],
+input[type="date"] {
+  font-size: 16pt;
+  padding: 5px;
+  width: 98%;
+  background-color: #fff;
+}
+
+select {
+  padding: 5px;
+  width: 100%;
+  font-size: 16pt;
+  width: 100%;
+  background-color: #fff;
+}
+
+button {
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: 5px;
+  padding: 10px 30px;
+}
+
+button.primary {
+  border: 2px solid #555;
 }

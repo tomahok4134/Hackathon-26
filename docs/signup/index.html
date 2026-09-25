@@ -19,13 +19,13 @@
   <div class="main">
     <div class="likeform">
       <div class="form-label">棟</div>
-      <select class="buildings" id="signup-buildings">
-      </select>
+      <select class="buildings" id="signup-buildings"></select>
       <div class="form-label">部屋番号</div>
       <input type="text" id="signup-roomNumber">
       <div class="form-label">名前(姓と名の間は半角スペースで区切ってください。)</div>
-      <input id="signup-name">
+      <input id="signup-name" type="text">
       <div class="form-label">性別</div>
+
       <select id="signup-gender">
         <option value="male">男性</option>
         <option value="female">女性</option>
@@ -66,7 +66,10 @@
       <label for="birthdate">生年月日</label>
       <input type="checkbox" id="relationship" value="relation">
       <label for="relation">世帯主との関係</label>
-      <button id="register" class="form-submit">上記の内容で登録</button>
+      <div class="button-area">
+        <button id="register" class="form-submit primary">上記の内容で登録</button>
+      </div>
+      <div id="result-display"></div>
     </div>
 
   </div>
