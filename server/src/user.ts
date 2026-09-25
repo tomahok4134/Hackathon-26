@@ -1,7 +1,7 @@
 import { DATA_FOLDER } from "./config.js";
 import { login } from "./login.js";
 import { getRoom } from "./room.js";
-import { exists } from "./util.js";
+import { exists, serializeUserId } from "./util.js";
 import * as fs from "fs/promises";
 
 export type User = {
@@ -11,6 +11,7 @@ export type User = {
   relationship: string;
   comment: string;
   privateInfos: { gender: boolean; birth: boolean; relationship: boolean };
+  password: string;
 };
 
 export async function getUser(
@@ -18,8 +19,9 @@ export async function getUser(
   floorId: number,
   roomId: number,
   userId: number,
+  needPassword: boolean = false,
 ): Promise<User | number> {
-  const room = await getRoom(buildingId, floorId, roomId);
+  const room = await getRoom(buildingId, floorId, roomId, needPassword);
   if (typeof room === "number") return room;
   if (!room.users[userId]) return 404;
 
@@ -62,16 +64,12 @@ export async function newUser(
 ) {
   const res = await modifyUser(buildingId, floorId, roomId, NaN, user);
   if (typeof res === "number") return res;
-  const logined = await login(
-    buildingId,
-    floorId,
-    roomId,
-    res.index,
-    user.birth,
-  );
+  const id = serializeUserId(buildingId, floorId, roomId, res.index);
+  const logined = await login(id, user.password);
   if (typeof logined === "number") return logined;
   return {
     index: res.index,
     uuid: logined.uuid,
+    id,
   };
 }

@@ -14,6 +14,17 @@ async function checkData() {
   if (await exists(DATA_FOLDER, true)) await fs.mkdir(DATA_FOLDER);
   if (await exists(`${DATA_FOLDER}/building`, true))
     await fs.mkdir(`${DATA_FOLDER}/building`);
+  if (await exists(`${DATA_FOLDER}/admins.json`, true))
+    await fs.writeFile(
+      `${DATA_FOLDER}/admins.json`,
+      JSON.stringify([
+        {
+          name: "デフォルト管理者",
+          id: "admin",
+          pass: `Admin:${Math.floor(Math.random() * 1000000)}`.padStart(6, "0"),
+        },
+      ]),
+    );
   if (await exists(`${DATA_FOLDER}/sessions.json`, true))
     await fs.writeFile(`${DATA_FOLDER}/sessions.json`, "[]");
   if (await exists(DATA_FOLDER + "/index.json", true))
@@ -59,13 +70,7 @@ app.get("/login", async (c) => {
 
 app.post("/login", async (c) => {
   const data = await c.req.json();
-  const result = await login(
-    data.buildingId,
-    data.floorId,
-    data.roomId,
-    data.userId,
-    data.birth,
-  );
+  const result = await login(data.id, data.pass);
 
   if (typeof result === "number")
     return c.body("", result as ContentfulStatusCode);
