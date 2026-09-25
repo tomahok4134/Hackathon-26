@@ -3,11 +3,9 @@ textarea {
   field-sizing: content;
   min-width: 30%;
 }
-
 .form-label {
   margin-top: 10px;
 }
-
 .form-submit {
   display: block;
   margin-top: 20px;
