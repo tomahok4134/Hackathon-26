@@ -79,10 +79,8 @@ button {
   font-weight: bold;
   border-radius: 5px;
   padding: 5px 30px;
-}
-
-button.primary {
   border: 2px solid #555;
+  cursor: pointer;
 }
 
 /** くの時back */
@@ -106,4 +104,18 @@ button.primary {
   left: 10px;
   top: 8px;
   transform: rotate(-135deg);
+}
+
+body:not(.admin-ui) .admin-only {
+  display: none;
+}
+
+button.link {
+  padding: 0;
+  font-size: 20px;
+  border: none;
+  background: none;
+  font-weight: normal;
+  color: #4d4dff;
+  text-decoration: underline;
 }

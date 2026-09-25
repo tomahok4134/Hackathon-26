@@ -1,6 +1,8 @@
 /**@typedef {import("../../server/src/general").GeneralInfo} GeneralInfo */
 /**@typedef {import("../../server/src/user").User} User */
-/**@typedef {import("../../server/src/login").Admin} User */
+/**@typedef {import("../../server/src/login").Admin} Admin */
+
+const globalLoginData = isLogining();
 
 /**@returns {Promise<GeneralInfo>} */
 async function getGeneralInfo() {
@@ -30,7 +32,7 @@ async function isLogining() {
  * @returns {userOrAdmin is Admin}
  */
 function isAdmin(userOrAdmin) {
-  return "id" in userOrAdmin;
+  return "pass" in userOrAdmin;
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -53,19 +55,24 @@ document.addEventListener("DOMContentLoaded", async () => {
   })();
 
   addHeader();
-  // usernameに注入
-  (async () => {
-    const login = await isLogining();
-    let label = login[0] ? login[1].name : "未ログイン";
-    if (login[0] && isAdmin(login[1])) label += "(管理者)";
-    applyHeaderURL(login[1]);
-    /**@type {NodeListOf<HTMLElement>} */
-    const usernameElements = document.querySelectorAll(".username");
-    if (usernameElements.length === 0) return;
+
+  const login = await globalLoginData;
+
+  let label = login[0] ? login[1].name : "未ログイン";
+  if (login[0] && isAdmin(login[1])) {
+    label += "(管理者)";
+    document.body.classList.add("admin-ui");
+  }
+
+  applyHeaderURL(login[1]);
+
+  /**@type {NodeListOf<HTMLElement>} */
+  const usernameElements = document.querySelectorAll(".username");
+
+  if (usernameElements.length !== 0)
     usernameElements.forEach((el) => {
       el.innerText = label;
     });
-  })();
 });
 
 function addHeader() {
