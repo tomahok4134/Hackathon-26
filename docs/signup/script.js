@@ -25,8 +25,10 @@ async function signup() {
   Object.values(formData).forEach((data) => {
     if (typeof data === "object" && "error" in data) errors.push(data.error);
   });
+  const resultDisplay = document.getElementById("result-display");
   if (errors.length > 0) {
-    return void alert("エラーが発生しました: \n" + errors.join("\n"));
+    resultDisplay.innerText = "エラーが発生しました: \n" + errors.join("\n");
+    return;
   }
 
   const url = `${API_URL}/db/${building}/${roomData.floorId}/${roomData.roomId}`;
@@ -41,13 +43,13 @@ async function signup() {
     method: "POST",
   });
   if (!res.ok) {
-    return void alert("登録に失敗しました。コード: " + res.status);
+    resultDisplay.innerText = "登録に失敗しました。コード: " + res.status;
+    return;
   }
   const result = await res.json();
   localStorage.setItem("uuid", result.uuid);
-  return void alert(
-    `登録が完了しました。あなたのユーザーIDは${result.index}です。`,
-  );
+  resultDisplay.innerText = `登録が完了しました。あなたのユーザーIDは${result.index}です。`;
+  return;
 }
 
 document.getElementById("register").onclick = () => signup();
