@@ -16,6 +16,7 @@ export async function getRoom(
   buildingId: number,
   floorId: number,
   roomId: number,
+  needPassword: boolean = false,
 ): Promise<number | Room> {
   const { buildings } = await getGeneralInfo();
   const path = `${DATA_FOLDER}/building/${buildingId}/${floorId}/${roomId}.json`;
@@ -37,7 +38,13 @@ export async function getRoom(
       users: [],
     };
 
-  return JSON.parse(await fs.readFile(path, "utf8"));
+  const result: Room = JSON.parse(await fs.readFile(path, "utf8"));
+  if (!needPassword)
+    result.users.forEach((u) => {
+      u.password = "";
+    });
+
+  return result;
 }
 
 export async function saveRoom(room: Room) {
