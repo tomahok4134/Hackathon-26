@@ -40,4 +40,7 @@ async function signin() {
   location.href = "../home";
 }
 
-document.getElementById("register").onclick = () => signin();
+document.getElementById("submit").onclick = (e) => {
+  e.preventDefault();
+  signin();
+};
