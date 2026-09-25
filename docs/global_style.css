@@ -1,0 +1,82 @@
+body {
+  padding: 0px;
+  margin: 0px;
+}
+
+header {
+  background-color: #742774;
+  color: #fff;
+  padding: 10px 25px;
+  font-size: 25px;
+
+  display: flex;
+}
+
+.header-user {
+  display: flex;
+  margin-left: auto;
+  align-items: center;
+}
+.header-user > .material-symbols-outlined {
+  height: 24px;
+  margin-right: 10px;
+}
+.header-title {
+  font-weight: bold;
+  color: #fff;
+  text-decoration: none;
+}
+
+.main {
+  font-size: 20px;
+  padding: 10px 20px;
+}
+
+* {
+  font-family: "Open Sans", sans-serif;
+  border-radius: 0px;
+}
+textarea {
+  resize: none;
+  field-sizing: content;
+  min-width: 30%;
+}
+.form-label {
+  margin: 10px 0px 5px 5px;
+}
+
+.button-row {
+  width: 100%;
+}
+.form-submit {
+  display: block;
+  margin-top: 20px;
+}
+
+textarea,
+input[type="text"],
+input[type="date"] {
+  font-size: 16pt;
+  padding: 5px;
+  width: 98%;
+  background-color: #fff;
+}
+
+select {
+  padding: 5px;
+  width: 100%;
+  font-size: 16pt;
+  width: 100%;
+  background-color: #fff;
+}
+
+button {
+  font-size: 25px;
+  font-weight: bold;
+  border-radius: 5px;
+  padding: 5px 30px;
+}
+
+button.primary {
+  border: 2px solid #555;
+}

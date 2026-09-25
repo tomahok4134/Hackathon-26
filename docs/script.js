@@ -11,14 +11,3 @@ if (CurrentTime >= 20 || CurrentTime < 5) {
 } else {
   Greetings.textContent = "What time is it now??";
 }
-
-(async () => {
-  const message = document.getElementById("debugmessage");
-  if (!message) return;
-  const loginState = await isLogining();
-  if (loginState[0]) {
-    message.innerText = `現在${loginState[1].name}としてサインインしています。`;
-  } else {
-    message.innerText = `${loginState[1]} `;
-  }
-})();

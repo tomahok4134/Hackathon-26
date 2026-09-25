@@ -24,7 +24,7 @@ async function isLogining() {
   return [true, JSON.parse(text)];
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   // select.buildingsに注入
   (async () => {
     /**@type {NodeListOf<HTMLSelectElement>} */
@@ -42,4 +42,38 @@ document.addEventListener("DOMContentLoaded", () => {
       );
     });
   })();
+
+  // usernameに注入
+  (async () => {
+    const login = await isLogining();
+    addHeader(login[0]);
+    /**@type {NodeListOf<HTMLElement>} */
+    const usernameElements = document.querySelectorAll(".username");
+    if (usernameElements.length === 0) return;
+    usernameElements.forEach((el) => {
+      el.innerText = login[0] ? login[1].name : "未ログイン";
+    });
+  })();
 });
+
+/**
+ * @param {boolean} isLogining
+ */
+function addHeader(isLogining) {
+  const nowURL = new URL(document.URL);
+  const path = isLogining
+    ? `${nowURL.origin}/docs/home/`
+    : `${nowURL.origin}/docs/`;
+  const header = document.createElement("header");
+  document.body.insertAdjacentElement("afterbegin", header);
+
+  header.innerHTML = `
+    <a class="header-title" href="${path}">デジタル回覧板</a>
+    <div class="header-user">
+      <span class="material-symbols-outlined">
+        face
+      </span>
+      <div class="username"></div>
+    </div>
+  `;
+}
