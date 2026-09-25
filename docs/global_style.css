@@ -58,6 +58,7 @@ textarea {
 
 textarea,
 input[type="text"],
+input[type="password"],
 input[type="date"] {
   font-size: 16pt;
   padding: 5px;

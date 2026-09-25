@@ -1,5 +1,6 @@
 /**@typedef {import("../../server/src/general").GeneralInfo} GeneralInfo */
 /**@typedef {import("../../server/src/user").User} User */
+/**@typedef {import("../../server/src/login").Admin} User */
 
 /**@returns {Promise<GeneralInfo>} */
 async function getGeneralInfo() {
@@ -7,7 +8,7 @@ async function getGeneralInfo() {
 }
 
 /**
- * @returns {Promise<[true, User]|[false,string]>}
+ * @returns {Promise<[true, User|Admin]|[false,string]>}
  */
 async function isLogining() {
   const uuid = localStorage.getItem("uuid");
@@ -22,6 +23,14 @@ async function isLogining() {
   if (text === "UUID Not Found") return [false, "ログインしていません。"];
   if (!res.ok) return [false, `不明なエラーです: ${res.status}/${text}`];
   return [true, JSON.parse(text)];
+}
+
+/**
+ * @param {User|Admin} userOrAdmin
+ * @returns {userOrAdmin is Admin}
+ */
+function isAdmin(userOrAdmin) {
+  return "id" in userOrAdmin;
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -47,12 +56,14 @@ document.addEventListener("DOMContentLoaded", async () => {
   // usernameに注入
   (async () => {
     const login = await isLogining();
-    applyHeaderURL(login[0]);
+    let label = login[0] ? login[1].name : "未ログイン";
+    if (login[0] && isAdmin(login[1])) label += "(管理者)";
+    applyHeaderURL(login[1]);
     /**@type {NodeListOf<HTMLElement>} */
     const usernameElements = document.querySelectorAll(".username");
     if (usernameElements.length === 0) return;
     usernameElements.forEach((el) => {
-      el.innerText = login[0] ? login[1].name : "未ログイン";
+      el.innerText = label;
     });
   })();
 });
@@ -76,19 +87,27 @@ function addHeader() {
 }
 
 /**
- * @param {boolean} isLogining
+ * @param {User|Admin|string|undefined} account
  */
-function applyHeaderURL(isLogining) {
-  const nowURL = new URL(document.URL);
-  const path = isLogining ? getURL(`home/index.html`) : getURL(`index.html`);
+function applyHeaderURL(account) {
+  if (typeof account === "string") account = undefined;
+  const path = account ? getURL(`home/index.html`) : getURL(`index.html`);
   document.querySelector("#header-title").href = path;
 
   document.querySelector("#header-user").onclick = () => {
-    if (isLogining) {
+    if (account) {
       localStorage.removeItem("uuid");
       location.href = getURL(`index.html`);
     } else {
-      location.href = getURL(`signup/index.html`);
+      location.href = getURL(`signin/index.html`);
     }
   };
+
+  const header = document.querySelector("header");
+  if (!header) return;
+  header.style.backgroundColor = !account
+    ? "#742774"
+    : isAdmin(account)
+      ? "#896113"
+      : "#204e8a";
 }

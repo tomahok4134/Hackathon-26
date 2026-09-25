@@ -14,6 +14,7 @@ async function signup() {
     relationship: getInput("signup-relationship", "世帯主との関係", true),
     comment: getInput("signup-comment", "コメント"),
     privateInfos: getCheckboxs(["name", "gender", "birth", "relationship"]),
+    password: getInput("signup-password", "パスワード", true),
   };
 
   let roomData = { floorId: NaN, roomId: NaN };
@@ -25,6 +26,15 @@ async function signup() {
   Object.values(formData).forEach((data) => {
     if (typeof data === "object" && "error" in data) errors.push(data.error);
   });
+
+  const rePassword = getInput("signup-password-re", "パスワード再入力");
+  if (
+    typeof formData.password === "string" &&
+    formData.password !== rePassword
+  ) {
+    errors.push("パスワードとその再入力が一致しません。");
+  }
+
   const resultDisplay = document.getElementById("result-display");
   if (errors.length > 0) {
     resultDisplay.innerText = "エラーが発生しました: \n" + errors.join("\n");
@@ -48,8 +58,13 @@ async function signup() {
   }
   const result = await res.json();
   localStorage.setItem("uuid", result.uuid);
-  resultDisplay.innerText = `登録が完了しました。あなたのユーザーIDは${result.index}です。`;
+  location.href = getURL(`home/index.html?registedId=${result.id}`);
   return;
 }
 
-document.getElementById("register").onclick = () => signup();
+function setup() {}
+
+document.getElementById("register").onclick = (e) => {
+  e.preventDefault();
+  signup();
+};

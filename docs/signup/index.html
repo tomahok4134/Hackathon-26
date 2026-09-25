@@ -17,7 +17,7 @@
 
 <body>
   <div class="main">
-    <div class="likeform">
+    <form class="likeform">
       <div class="form-label">棟</div>
       <select class="buildings" id="signup-buildings"></select>
       <div class="form-label">部屋番号</div>
@@ -67,11 +67,17 @@
       <label for="birthdate">生年月日</label>
       <input type="checkbox" id="relationship" value="relation">
       <label for="relation">世帯主との関係</label>
+      <br>
+      <label for="password">パスワード</label>
+      <input type="password" id="signup-password" autocomplete="new-password">
+      <label for="password-re">パスワード再入力</label>
+      <input type="password" id="signup-password-re" autocomplete="new-password">
       <div class="button-area">
         <button id="register" class="form-submit primary">上記の内容で登録</button>
       </div>
       <div id="result-display"></div>
-    </div>
+
+    </form>
   </div>
   <footer>
 
