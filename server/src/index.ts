@@ -2,7 +2,7 @@ import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import * as fs from "fs/promises";
 import { DATA_FOLDER } from "./config.js";
-import { exists, serializeUserId, unserializeUserId } from "./util.js";
+import { exists, isAdmin, serializeUserId, unserializeUserId } from "./util.js";
 import { setCookie } from "hono/cookie";
 import { getRoom } from "./room.js";
 import { getUser, modifyUser, newUser } from "./user.js";
@@ -27,6 +27,8 @@ async function checkData() {
     );
   if (await exists(`${DATA_FOLDER}/sessions.json`, true))
     await fs.writeFile(`${DATA_FOLDER}/sessions.json`, "[]");
+  if (await exists(`${DATA_FOLDER}/news.json`, true))
+    await fs.writeFile(`${DATA_FOLDER}/news.json`, "[]");
   if (await exists(DATA_FOLDER + "/index.json", true))
     await fs.writeFile(
       DATA_FOLDER + "/index.json",
@@ -75,6 +77,58 @@ app.post("/login", async (c) => {
   if (typeof result === "number")
     return c.body("", result as ContentfulStatusCode);
   return c.json(result);
+});
+
+app.get("/news", async (c) => {
+  let news: any[] = JSON.parse(
+    await fs.readFile(`${DATA_FOLDER}/news.json`, "utf8"),
+  );
+  const limit = parseInt(c.req.query("limit") ?? "");
+  const start = parseInt(c.req.query("start") ?? "");
+  news = news.slice(
+    Number.isNaN(start) ? 0 : start,
+    Number.isNaN(limit) ? Infinity : limit - 1,
+  );
+  return c.json(news);
+});
+
+app.post("/news", async (c) => {
+  const data = await c.req.json();
+  const user = await logining(data.uuid ?? "");
+  if (typeof user === "string") return c.text(user, 401);
+  if (!isAdmin(user)) return c.text("", 403);
+
+  const news = JSON.parse(
+    await fs.readFile(`${DATA_FOLDER}/news.json`, "utf8"),
+  );
+  news.unshift({
+    title: data.title ?? "ニュース",
+    content: data.content ?? "",
+    author: user.name,
+    date: new Date().toISOString(),
+  });
+  await fs.writeFile(`${DATA_FOLDER}/news.json`, JSON.stringify(news));
+
+  return c.json(news[0], 201);
+});
+
+app.delete("/news/:i", async (c) => {
+  const index = parseInt(c.req.param("i"));
+  const uuid = c.req.query("uuid");
+  if (!uuid) return c.body("", 401);
+  const user = await logining(uuid ?? "");
+  if (typeof user === "string") return c.text(user, 401);
+  if (!isAdmin(user)) return c.text("", 403);
+  if (Number.isNaN(index))
+    return c.text(`not allow index ${c.req.param("i")}`, 400);
+
+  let news: any[] = JSON.parse(
+    await fs.readFile(`${DATA_FOLDER}/news.json`, "utf8"),
+  );
+  news = news.filter((_, i) => i !== index);
+  await fs.writeFile(`${DATA_FOLDER}/news.json`, JSON.stringify(news));
+
+  return c.body(null, 204);
 });
 
 app.get("/db/:b/:f/:r", async (c) => {

@@ -1,4 +1,6 @@
 import * as fs from "fs/promises";
+import { User } from "./user.js";
+import { Admin } from "./login.js";
 export function exists(path: string, inverse: boolean = false) {
   return fs.access(path).then(
     () => (inverse ? false : true),
@@ -20,4 +22,8 @@ export function unserializeUserId(id: string) {
     .split("9")
     .map((n) => parseInt(n, 9));
   return { building, floor, room, userId };
+}
+
+export function isAdmin(userOrAdmin: User | Admin) {
+  return "id" in userOrAdmin;
 }
