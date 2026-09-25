@@ -13,17 +13,29 @@ export function serializeUserId(
   floor: number,
   room: number,
   userId: number,
+): string;
+export function serializeUserId(
+  arg0: number,
+  floor?: number,
+  room?: number,
+  userId?: number,
 ) {
-  return `${building.toString(9)}9${floor.toString(9)}9${room.toString(9)}9${userId.toString(9)}`;
+  if (
+    typeof floor !== "number" ||
+    typeof room !== "number" ||
+    typeof userId !== "number"
+  )
+    throw new TypeError(`argment error`);
+  return `${arg0.toString(9)}9${floor.toString(9)}9${room.toString(9)}9${userId.toString(9)}`;
 }
 
 export function unserializeUserId(id: string) {
-  const [building, floor, room, userId] = id
+  const [building, floor, room, index] = id
     .split("9")
     .map((n) => parseInt(n, 9));
-  return { building, floor, room, userId };
+  return { building, floor, room, index };
 }
 
 export function isAdmin(userOrAdmin: User | Admin) {
-  return "id" in userOrAdmin;
+  return "pass" in userOrAdmin;
 }

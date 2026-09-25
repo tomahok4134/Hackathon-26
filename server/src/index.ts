@@ -9,6 +9,7 @@ import { getUser, modifyUser, newUser } from "./user.js";
 import { ContentfulStatusCode } from "hono/utils/http-status";
 import { login, logining } from "./login.js";
 import { cors } from "hono/cors";
+import { getRecentChange } from "./recent.js";
 
 async function checkData() {
   if (await exists(DATA_FOLDER, true)) await fs.mkdir(DATA_FOLDER);
@@ -29,6 +30,8 @@ async function checkData() {
     await fs.writeFile(`${DATA_FOLDER}/sessions.json`, "[]");
   if (await exists(`${DATA_FOLDER}/news.json`, true))
     await fs.writeFile(`${DATA_FOLDER}/news.json`, "[]");
+  if (await exists(`${DATA_FOLDER}/recent.json`, true))
+    await fs.writeFile(`${DATA_FOLDER}/recent.json`, "[]");
   if (await exists(DATA_FOLDER + "/index.json", true))
     await fs.writeFile(
       DATA_FOLDER + "/index.json",
@@ -131,6 +134,12 @@ app.delete("/news/:i", async (c) => {
   return c.body(null, 204);
 });
 
+app.get("/recents", async (c) => {
+  const limit = parseInt(c.req.query("limit") ?? "");
+  const changes = await getRecentChange(Number.isNaN(limit) ? Infinity : limit);
+  return c.json(changes);
+});
+
 app.get("/db/:b/:f/:r", async (c) => {
   const buildingId = parseInt(c.req.param("b")),
     floorId = parseInt(c.req.param("f")),
@@ -155,13 +164,14 @@ app.post("/db/:b/:f/:r", async (c) => {
 });
 
 app.post("/db/:b/:f/:r/:u", async (c) => {
+  // 互換性のため維持
   const buildingId = parseInt(c.req.param("b")),
     floorId = parseInt(c.req.param("f")),
     roomId = parseInt(c.req.param("r")),
     userId = parseInt(c.req.param("u")),
     content = await c.req.json();
 
-  const result = await modifyUser(buildingId, floorId, roomId, userId, content);
+  const result = await modifyUser(content);
   if (typeof result === "number")
     return c.body("", result as ContentfulStatusCode);
   return c.json(result);

@@ -1,0 +1,29 @@
+import { addRecentChange } from "./recent.js";
+import { User } from "./user.js";
+import { serializeUserId } from "./util.js";
+
+export function onUserModified(ne: User, ol: User | null): Promise<void>;
+export function onUserModified(ne: User | null, ol: User): Promise<void>;
+export function onUserModified(ne: User, ol: User): Promise<void>;
+export async function onUserModified(ne: User | null, ol: User | null) {
+  if (!ne && ol) {
+    await addRecentChange({
+      type: "leave",
+      targetUserName: ol.name,
+    });
+  } else if (ne && !ol) {
+    await addRecentChange({
+      type: "new",
+      targetUserId: ne.id,
+      targetUserName: ne.name,
+    });
+  } else if (ne && ol) {
+    await addRecentChange({
+      type: "modify",
+      targetUserId: ne.id,
+      targetUserName: ne.name,
+    });
+  } else {
+    throw new Error("no user");
+  }
+}

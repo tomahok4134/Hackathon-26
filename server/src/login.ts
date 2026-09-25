@@ -15,8 +15,7 @@ export async function login(id: string, pass: string) {
     const result = await findAdmin(id.substring(6));
     if (!result || result.pass !== pass) return 401;
   } else {
-    const { building, floor, room, userId } = unserializeUserId(id);
-    const user = await getUser(building, floor, room, userId, true);
+    const user = await getUser(id, null, null, null, true);
     if (user === 404) return 401;
     if (typeof user === "number") return user;
     if (user.password !== pass) return 401;
@@ -51,8 +50,8 @@ export async function logining(
     if (new Date(expire) < now) return "expired";
     if (id.startsWith("admin-"))
       return (await findAdmin(id.substring(6))) ?? "user-error";
-    const { building, floor, room, userId } = unserializeUserId(id);
-    const result = await getUser(building, floor, room, userId);
+    const { building, floor, room, index } = unserializeUserId(id);
+    const result = await getUser(building, floor, room, index);
     if (typeof result === "number") return "user-error";
     return result;
   }
