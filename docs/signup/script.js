@@ -13,7 +13,7 @@ async function signup() {
     birth: getInput("signup-birth", "生年月日", true),
     relationship: getInput("signup-relationship", "世帯主との関係", true),
     comment: getInput("signup-comment", "コメント"),
-    privateInfos: getCheckboxs(["gender", "birth", "relationship"]),
+    privateInfos: getCheckboxs(["name", "gender", "birth", "relationship"]),
   };
 
   let roomData = { floorId: NaN, roomId: NaN };

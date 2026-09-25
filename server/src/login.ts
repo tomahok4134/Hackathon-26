@@ -13,6 +13,7 @@ export async function login(
   birth: string,
 ) {
   const user = await getUser(buildingId, floorId, roomId, userId);
+  if (user === 404) return 401;
   if (typeof user === "number") return user;
   if (user.birth !== birth) return 401;
   const uuid = crypto.randomUUID();
