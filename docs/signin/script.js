@@ -3,10 +3,8 @@ async function signin() {
   const errors = [];
 
   const form = {
-    userid: getInput("signin-userid", "ユーザID", true),
-    birth: getInput("signin-birth", "生年月日", true),
-    roomNumber: getInput("signin-roomNumber", "部屋番号", true),
-    building: getInput("signin-buildings", "棟", true),
+    id: getInput("signin-userid", "ユーザID", true),
+    pass: getInput("signin-pass", "パスワード", true),
   };
 
   let roomData = { floorId: NaN, roomId: NaN };
@@ -24,22 +22,14 @@ async function signin() {
     return;
   }
 
-  const body = {
-    buildingId: parseInt(form.building),
-    floorId: roomData.floorId,
-    roomId: roomData.roomId,
-    userId: parseInt(form.userid),
-    birth: form.birth,
-  };
-
   const url = `${API_URL}/login`;
   const res = await fetch(url, {
-    body: JSON.stringify(body),
+    body: JSON.stringify(form),
     method: "POST",
   });
   if (!res.ok) {
     if (res.status === 401)
-      resultDisplay.innerText = "入力した情報が間違っています。";
+      resultDisplay.innerText = "ユーザIDまたはパスワードが間違っています。";
     else
       resultDisplay.innerText = "ログインに失敗しました。コード: " + res.status;
     return;
