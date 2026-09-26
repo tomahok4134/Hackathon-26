@@ -43,3 +43,39 @@
 .select-member {
   display: flex;
 }
+
+#result {
+  width: fit-content;
+  min-width: 300px;
+}
+
+.user {
+  border: 1px solid #000;
+  padding: 5px 10px;
+  width: calc(100% - 22px);
+  margin-bottom: 10px;
+}
+.u-relation {
+  color: #555;
+  font-size: 90%;
+}
+.u-title {
+  font-weight: bold;
+  font-size: 110%;
+}
+.u-birth::after {
+  content: "・";
+}
+.u-comment {
+  margin-top: 5px;
+  border: 2px dotted #777;
+  border-radius: 5px;
+  padding: 2px 5px;
+}
+
+.user > button {
+  font-size: 15px;
+  margin-top: 5px;
+  padding: 3px 10px;
+  margin-right: 2px;
+}

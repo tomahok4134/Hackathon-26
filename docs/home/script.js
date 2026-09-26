@@ -80,7 +80,7 @@ async function showRecents() {
     userBtn.className = "link";
     userBtn.innerText = r.targetUserName;
     userBtn.onclick = async () => {
-      // wip
+      location.href = getURL(`members/index.html?id=${r.targetUserId}`);
     };
 
     let text = "";

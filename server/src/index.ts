@@ -175,7 +175,6 @@ app.post("/db/:b/:f/:r", async (c) => {
     content = await c.req.json();
 
   const result = await newUser(buildingId, floorId, roomId, content);
-  console.log(result);
   if (typeof result === "number")
     return c.body(null, result as ContentfulStatusCode);
   return c.json(result);
