@@ -123,3 +123,12 @@ function showPopup(content, buttons) {
   wrapper.append(popup);
   document.body.append(wrapper);
 }
+
+/**
+ * 指定したname属性のラジオボタンから選択されている値を get
+ * @param {string} name - ラジオボタンのname属性
+ * @returns {string|undefined} 選択されている要素のvalue（未選択の場合はundefined）
+ */
+const getRadioValue = (name) => {
+  return document.querySelector(`input[name="${name}"]:checked`)?.value;
+};
