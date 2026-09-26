@@ -5,11 +5,6 @@
  * @param {string} label
  */
 function makeSelect(category, value, label) {
-  /*  <label class="radio-button">
-          <input type="radio" name="sample" value="1" checked>
-          <span class="radio-label">選択肢 1</span>
-        </label>
-*/
   const labelEl = document.createElement("label");
   labelEl.className = "radio-button";
   const input = document.createElement("input");
@@ -23,3 +18,10 @@ function makeSelect(category, value, label) {
 
   return labelEl;
 }
+
+async function generateRoomSelect() {
+  const general = await getGeneralInfo();
+  general.buildings.forEach(() => {});
+}
+
+async function select(params) {}
