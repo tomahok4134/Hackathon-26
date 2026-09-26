@@ -73,6 +73,29 @@ document.addEventListener("DOMContentLoaded", async () => {
     usernameElements.forEach((el) => {
       el.innerText = label;
     });
+
+  // クエリごとの挙動
+  const url = new URL(location);
+  const error = url.searchParams.get("error");
+  let changed = false;
+  if (error) {
+    switch (error) {
+      case "admin":
+        showToast("このページへのアクセスには管理者権限が必要です。");
+        break;
+      case "login":
+        showToast("このページへのアクセスにはログインが必要です。");
+        break;
+
+      default:
+        break;
+    }
+    url.searchParams.delete("error");
+    changed = true;
+  }
+  if (changed) {
+    history.replaceState({}, "", url);
+  }
 });
 
 function addHeader() {
@@ -115,6 +138,13 @@ function applyHeaderURL(account) {
   header.style.backgroundColor = !account
     ? "#742774"
     : isAdmin(account)
-      ? "#896113"
+      ? "#bd881e"
       : "#204e8a";
+}
+
+async function returnIfNotLogined(needAdmin = false) {
+  const login = await globalLoginData;
+  if (!login[0]) location.href = getURL("index.html?error=login");
+  if (needAdmin && !isAdmin(login[1]))
+    location.href = getURL("home/index.html?error=admin");
 }

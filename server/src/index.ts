@@ -115,6 +115,23 @@ app.post("/news", async (c) => {
   return c.json(news[0], 201);
 });
 
+app.post("/news/:i", async (c) => {
+  const index = parseInt(c.req.param("i"));
+  const data = await c.req.json();
+  const user = await logining(data.uuid ?? "");
+  if (typeof user === "string") return c.text(user, 401);
+  if (isAdmin(user)) return c.text("", 403);
+
+  const news = JSON.parse(
+    await fs.readFile(`${DATA_FOLDER}/news.json`, "utf8"),
+  );
+  if (!news[index]) return c.text("", 404);
+  news[index].read.push([user.id, user.name]);
+  await fs.writeFile(`${DATA_FOLDER}/news.json`, JSON.stringify(news));
+
+  return c.body(null, 204);
+});
+
 app.delete("/news/:i", async (c) => {
   const index = parseInt(c.req.param("i"));
   const uuid = c.req.query("uuid");
@@ -158,8 +175,9 @@ app.post("/db/:b/:f/:r", async (c) => {
     content = await c.req.json();
 
   const result = await newUser(buildingId, floorId, roomId, content);
+  console.log(result);
   if (typeof result === "number")
-    return c.body("", result as ContentfulStatusCode);
+    return c.body(null, result as ContentfulStatusCode);
   return c.json(result);
 });
 

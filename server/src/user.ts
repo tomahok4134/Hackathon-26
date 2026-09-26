@@ -62,7 +62,7 @@ export async function modifyUser(user: User, isNew: boolean = false) {
   if (isNew) index = Infinity;
 
   const roomData = await getRoom(building, floor, room);
-  if (typeof roomData === "number") return room;
+  if (typeof roomData === "number") return roomData;
 
   const res = { new: true, index: roomData.users.length };
 

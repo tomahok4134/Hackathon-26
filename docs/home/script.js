@@ -60,6 +60,7 @@ async function showRecents() {
   const login = await globalLoginData;
   if (!login[0]) return;
   const userRoom = unserializeUserId(login[1].id);
+  const admin = isAdmin(login[1]);
 
   const newsElements = recent.flatMap((r, i) => {
     const targetRoom = unserializeUserId(r.targetUserId);
@@ -84,6 +85,7 @@ async function showRecents() {
 
     let text = "";
     const ids = unserializeUserId(r.targetUserId);
+    if (userRoom.building !== targetRoom.building && !admin) return [];
     const roomNum = joinRoomNumber(ids.floor, ids.room);
     switch (r.type) {
       case "new":
@@ -93,8 +95,7 @@ async function showRecents() {
         text = `が${roomNum}号室から退去しました。`;
         break;
       case "modify":
-        if (!isAdmin(login[1])) {
-          if (userRoom.building !== targetRoom.building) return [];
+        if (!admin) {
           if (userRoom.floor !== targetRoom.floor) return [];
           if (userRoom.room !== targetRoom.room) return [];
         }
@@ -113,5 +114,20 @@ async function showRecents() {
   document.getElementById("Updates").append(...newsElements);
 }
 
+function showSignupedPopup() {
+  const url = new URL(location);
+  const id = url.searchParams.get("userId");
+  if (!id) return;
+  const div = document.createElement("div");
+  div.innerHTML =
+    "サインアップが完了しました！<br>あなたのユーザIDは<strong></strong>です。<br>今後のログインに使用するため、覚えておいてください。";
+  div.querySelector("strong").innerText = id;
+  showPopup(div, []);
+  url.searchParams.delete("userId");
+  history.replaceState({}, "", url);
+}
+
+returnIfNotLogined();
 showNews();
 showRecents();
+showSignupedPopup();

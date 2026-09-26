@@ -11,3 +11,10 @@ if (CurrentTime >= 20 || CurrentTime < 5) {
 } else {
   Greetings.textContent = "What time is it now??";
 }
+
+if (new URL(location).searchParams.get("state") === "open") {
+  globalLoginData.then(([login]) => {
+    if (login) location.href = getURL(`home/index.html`);
+    else location.href = getURL(`index.html`);
+  });
+}

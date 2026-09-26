@@ -1,0 +1,41 @@
+/* ラジオボタン（input）を完全に隠す */
+.radio-button input[type="radio"] {
+  display: none;
+}
+
+/* ボタンの基本デザイン（非選択時） */
+.radio-button .radio-label {
+  display: inline-block;
+  background-color: #fff;
+  color: #333;
+
+  font-size: 22px;
+  border-radius: 5px;
+  padding: 5px 30px;
+  border: 2px solid #555;
+  cursor: pointer;
+}
+
+/* ホバー時のデザイン */
+.radio-button .radio-label:hover {
+  border-color: #007bff;
+}
+
+/* チェックが入った（選択された）時のデザイン */
+.radio-button input[type="radio"]:checked + .radio-label {
+  background-color: #007bff;
+  border-color: #007bff;
+  color: #fff;
+}
+
+.radio-group-v {
+  display: grid;
+  grid-template-columns: max-content;
+  gap: 5px;
+}
+.radio-group-v .radio-label {
+  width: calc(100% - 64px);
+}
+.select-member {
+  display: flex;
+}

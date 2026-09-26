@@ -58,7 +58,7 @@ async function signup() {
   }
   const result = await res.json();
   localStorage.setItem("uuid", result.uuid);
-  location.href = getURL(`home/index.html?registedId=${result.id}`);
+  location.href = getURL(`home/index.html?userId=${result.id}`);
   return;
 }
 

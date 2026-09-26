@@ -45,7 +45,7 @@ export async function getRecentChange(limit: number = Infinity) {
     await fs.readFile(`${DATA_FOLDER}/recent.json`, "utf8"),
   );
   const deleteFrom = new Date();
-  deleteFrom.setMonth(deleteFrom.getMonth() - 1);
+  deleteFrom.setDate(deleteFrom.getDate() - 7);
   const deleteFromValue = deleteFrom.valueOf();
   recents.filter((r) => new Date(r.date).valueOf() > deleteFromValue);
 

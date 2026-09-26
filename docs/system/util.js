@@ -67,3 +67,59 @@ function getURL(path) {
     return `http://localhost:5500/docs/${path}`;
   return `https://tomahok4134.github.io/Hackathon-26/${path}`;
 }
+
+function showToast(message) {
+  let container = document.getElementById("toast-container");
+  if (!container) {
+    container = document.createElement("div");
+    container.id = "toast-container";
+    document.body.append(container);
+  }
+
+  // トースト要素の作成
+  const toast = document.createElement("div");
+  toast.className = "toast";
+  toast.textContent = message;
+
+  // コンテナに追加
+  container.appendChild(toast);
+
+  // わずかに遅れてクラスを付与し、フェードインさせる
+  setTimeout(() => {
+    toast.classList.add("show");
+  }, 10);
+
+  // 3秒後にフェードアウトさせて削除
+  setTimeout(
+    () => {
+      toast.classList.remove("show");
+      setTimeout(() => {
+        toast.remove();
+      }, 300); // CSSのtransition時間と合わせる
+    },
+    3000 + message.length * 100,
+  );
+}
+
+/**
+ * @param {HTMLDivElement} content
+ * @param {HTMLButtonElement[]} buttons
+ */
+function showPopup(content, buttons) {
+  const wrapper = document.createElement("div");
+  wrapper.className = "popup-wrapper";
+  const popup = document.createElement("div");
+  popup.className = "popup";
+  content.classList.add("popup-content");
+  const btns = document.createElement("div");
+  btns.className = "popup-buttons";
+
+  const close = document.createElement("button");
+  close.innerText = "閉じる";
+  close.onclick = () => wrapper.remove();
+
+  btns.append(...buttons, close);
+  popup.append(content, btns);
+  wrapper.append(popup);
+  document.body.append(wrapper);
+}

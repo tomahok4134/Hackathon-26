@@ -38,6 +38,7 @@ async function submit() {
   location.href = "../home";
 }
 
+returnIfNotLogined(true);
 document.getElementById("submit").onclick = (e) => {
   e.preventDefault();
   submit();
