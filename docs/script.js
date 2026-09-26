@@ -15,6 +15,5 @@ if (CurrentTime >= 20 || CurrentTime < 5) {
 if (window.self !== window.top) {
   globalLoginData.then(([login]) => {
     if (login) location.href = getURL(`home/index.html`);
-    else location.href = getURL(`index.html`);
   });
 }
