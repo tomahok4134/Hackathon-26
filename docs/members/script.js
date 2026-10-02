@@ -50,8 +50,10 @@ function generateRoomSelect(general, userInfo = null) {
 function selectBuilding(floors, userInfo) {
   /**@type {HTMLFormElement} */
   const floorsEl = document.querySelector("#floors");
+  const roomsEl = document.querySelector("#rooms");
   document.querySelector("#result").style.display = "none";
   floorsEl.innerHTML = "";
+  roomsEl.innerHTML = "";
   const selects = floors.map((f, i) =>
     makeSelect("floor", `${i}`, `${i + 1}階`, userInfo && i === userInfo.floor),
   );
